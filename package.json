@@ -1,0 +1,20 @@
+{
+  "name": "shimla-manali-tourism",
+  "version": "1.0.0",
+  "description": "Shimla–Manali Tourism Website — High-Fidelity Responsive Home Page based on Figma Design",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "shimla",
+    "manali",
+    "tourism",
+    "frontend",
+    "responsive",
+    "figma"
+  ],
+  "author": "Frontend Developer",
+  "license": "MIT"
+}
