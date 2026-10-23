@@ -57,6 +57,11 @@
   
   --glass-blur: blur(16px);
   --glass-border: 1px solid rgba(255, 255, 255, 0.15);
+  --glass-surface: rgba(255, 255, 255, 0.64);
+  --glass-outline: 1px solid rgba(255, 255, 255, 0.58);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  --glass-shadow: 0 14px 36px rgba(40, 21, 36, 0.12);
+  --glass-backdrop: blur(16px) saturate(145%);
   
   /* Transitions */
   --transition-fast: 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -163,14 +168,17 @@ h1, h2, h3, h4, .font-display {
   display: inline-block;
   padding: 0.4rem 1.25rem;
   border-radius: 9999px;
-  background: rgba(73, 35, 61, 0.08);
+  background: rgba(255, 255, 255, 0.58);
   color: var(--color-primary);
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   margin-bottom: 1rem;
-  border: 1px solid rgba(73, 35, 61, 0.12);
+  border: var(--glass-outline);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 5px 16px rgba(40, 21, 36, 0.07);
 }
 
 .section-tag-pill.green-pill {
@@ -268,18 +276,18 @@ h1, h2, h3, h4, .font-display {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--color-navbar-gradient);
+  background: linear-gradient(90deg, rgba(229, 43, 69, 0.86) 0%, rgba(173, 60, 106, 0.84) 52%, rgba(81, 75, 155, 0.86) 100%);
   border-radius: 9999px;
   padding: 0.65rem 1.75rem;
-  box-shadow: var(--shadow-nav);
+  box-shadow: var(--glass-highlight), var(--shadow-nav);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .navbar:hover {
-  box-shadow: 0 16px 42px rgba(40, 21, 36, 0.45);
+  box-shadow: var(--glass-highlight), 0 16px 42px rgba(40, 21, 36, 0.45);
 }
 
 /* Brand Logo */
@@ -370,7 +378,9 @@ h1, h2, h3, h4, .font-display {
   width: 320px;
   max-width: 85%;
   height: 100vh;
-  background: #49233d;
+  background: rgba(53, 26, 46, 0.88);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
   box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
   padding: 2rem 1.75rem;
   display: flex;
@@ -442,6 +452,7 @@ h1, h2, h3, h4, .font-display {
    -------------------------------------------------------------------------- */
 .hero-section {
   position: relative;
+  z-index: 1;
   min-height: 98vh;
   width: calc(100% - 2.5rem);
   margin: 1.25rem auto 0;
@@ -527,16 +538,16 @@ h1, h2, h3, h4, .font-display {
 }
 
 .floating-glass-bar {
-  background: rgba(73, 35, 61, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: linear-gradient(110deg, rgba(74, 86, 194, 0.76) 0%, rgba(177, 59, 117, 0.78) 52%, rgba(244, 47, 65, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
   border-radius: 28px;
   padding: 1.75rem 2.25rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.75rem;
-  box-shadow: 0 16px 40px rgba(40, 21, 36, 0.3);
+  box-shadow: var(--glass-highlight), 0 16px 40px rgba(40, 21, 36, 0.3);
 }
 
 .feature-item {
@@ -558,8 +569,11 @@ h1, h2, h3, h4, .font-display {
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  background: var(--color-cta);
-  color: var(--text-white);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: var(--color-accent-gold);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
 
@@ -661,9 +675,23 @@ h1, h2, h3, h4, .font-display {
    6. CURATED TRAVEL PACKAGES SECTION
    -------------------------------------------------------------------------- */
 .packages-section {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  margin-top: 6.75rem;
   padding-top: 7rem;
   padding-bottom: 5rem;
   background: linear-gradient(180deg, #f8f1f3 0%, #fcfaf8 100%);
+}
+
+.packages-section::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('../assets/images/bg-packages-mountain.png') center / cover no-repeat;
+  content: '';
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 .section-header {
@@ -683,12 +711,14 @@ h1, h2, h3, h4, .font-display {
 .filter-pill {
   padding: 0.55rem 1.5rem;
   border-radius: 9999px;
-  background: #ffffff;
+  background: var(--glass-surface);
   color: var(--color-primary);
   font-size: 0.95rem;
   font-weight: 600;
-  border: 1px solid rgba(73, 35, 61, 0.15);
-  box-shadow: var(--shadow-sm);
+  border: var(--glass-outline);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 5px 16px rgba(40, 21, 36, 0.07);
   transition: all var(--transition-fast);
 }
 
@@ -712,11 +742,13 @@ h1, h2, h3, h4, .font-display {
 }
 
 .package-card {
-  background: var(--bg-card);
+  background: var(--glass-surface);
   border-radius: 22px;
   overflow: hidden;
-  border: 1px solid rgba(73, 35, 61, 0.08);
-  box-shadow: var(--shadow-sm);
+  border: var(--glass-outline);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
   display: flex;
   flex-direction: column;
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
@@ -724,7 +756,7 @@ h1, h2, h3, h4, .font-display {
 
 .package-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--glass-highlight), 0 20px 42px rgba(40, 21, 36, 0.18);
 }
 
 .card-image-wrapper {
@@ -749,18 +781,21 @@ h1, h2, h3, h4, .font-display {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(12px) saturate(145%);
+  backdrop-filter: blur(12px) saturate(145%);
   color: #49233d;
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.3rem 0.75rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: var(--glass-outline);
+  box-shadow: var(--glass-highlight), 0 6px 18px rgba(40, 21, 36, 0.12);
 }
 
 .card-body {
   padding: 1.25rem 1.35rem;
+  background: rgba(255, 255, 255, 0.48);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -784,7 +819,10 @@ h1, h2, h3, h4, .font-display {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--color-primary);
-  background: rgba(73, 35, 61, 0.08);
+  background: rgba(255, 255, 255, 0.56);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   padding: 0.15rem 0.5rem;
   border-radius: 6px;
   white-space: nowrap;
@@ -852,8 +890,20 @@ h1, h2, h3, h4, .font-display {
    7. DISCOVER HIMACHAL WITH US SECTION
    -------------------------------------------------------------------------- */
 .discover-section {
+  position: relative;
+  isolation: isolate;
   padding: 6rem 0;
-  background: #ffffff;
+  background: #f8fbfa;
+}
+
+.discover-section::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('../assets/images/bg-snow-leopard.png') center / cover no-repeat;
+  content: '';
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 .discover-subtitle {
@@ -878,6 +928,20 @@ h1, h2, h3, h4, .font-display {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding: 1.1rem 1.15rem;
+  border: var(--glass-outline);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.52);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 10px 26px rgba(30, 76, 63, 0.08);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.story-feature-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: var(--glass-highlight), 0 16px 32px rgba(30, 76, 63, 0.13);
 }
 
 .story-feature-header {
@@ -1025,18 +1089,21 @@ h1, h2, h3, h4, .font-display {
 }
 
 .stat-card {
-  background: rgba(248, 246, 240, 0.7);
-  border: 1px solid rgba(73, 35, 61, 0.1);
+  background: var(--glass-surface);
+  border: var(--glass-outline);
   border-radius: 20px;
   padding: 1.85rem 1.5rem;
   text-align: center;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 12px 32px rgba(30, 76, 63, 0.1);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-sm);
-  background: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 18px 38px rgba(30, 76, 63, 0.16);
+  background: rgba(255, 255, 255, 0.72);
 }
 
 .stat-icon-wrapper {
@@ -1062,15 +1129,17 @@ h1, h2, h3, h4, .font-display {
 
 /* Mid-page Call to Action Glass Capsule Banner */
 .journey-banner-capsule {
-  background: rgba(248, 246, 240, 0.85);
-  border: 1px solid rgba(73, 35, 61, 0.12);
+  background: var(--glass-surface);
+  border: var(--glass-outline);
   border-radius: 9999px;
   padding: 1.25rem 2.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  box-shadow: var(--shadow-sm);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 16px 40px rgba(30, 76, 63, 0.12);
 }
 
 .journey-title {
@@ -1088,8 +1157,22 @@ h1, h2, h3, h4, .font-display {
    8. EXPLORE SHIMLA & MANALI SECTION
    -------------------------------------------------------------------------- */
 .explore-section {
+  position: relative;
+  isolation: isolate;
   padding: 5rem 0 6rem;
-  background: linear-gradient(180deg, #fcfaf8 0%, #f5edf1 100%);
+  background: #f8f9fc;
+}
+
+.explore-section::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(115deg, rgba(229, 43, 69, 0.24), rgba(81, 75, 155, 0.26)),
+    url('../assets/images/bg-snow-leopard.png') center / cover no-repeat;
+  content: '';
+  opacity: 0.28;
+  pointer-events: none;
 }
 
 .explore-grid {
@@ -1146,6 +1229,10 @@ h1, h2, h3, h4, .font-display {
   left: 0;
   width: 100%;
   padding: 2.25rem 2.25rem 2rem;
+  background: rgba(40, 21, 36, 0.38);
+  border-top: 1px solid rgba(255, 255, 255, 0.32);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  backdrop-filter: blur(18px) saturate(135%);
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -1173,7 +1260,8 @@ h1, h2, h3, h4, .font-display {
 
 .destination-badge {
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
   color: var(--text-white);
   font-size: 0.85rem;
   font-weight: 600;
@@ -1225,18 +1313,22 @@ h1, h2, h3, h4, .font-display {
 }
 
 .departure-card {
-  background: #fff2f4;
-  border: 1.5px solid var(--color-accent-gold);
+  background: var(--glass-surface);
+  border: var(--glass-outline);
   border-radius: 20px;
   padding: 1.75rem 1.5rem;
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 12px 30px rgba(40, 21, 36, 0.09);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
 }
 
 .departure-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(245, 184, 0, 0.2);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: var(--glass-highlight), 0 18px 36px rgba(40, 21, 36, 0.15);
 }
 
 .departure-top-row {
@@ -1301,14 +1393,17 @@ h1, h2, h3, h4, .font-display {
 }
 
 .google-review-badge {
-  background: #f8f1f3;
-  border: 1px solid rgba(73, 35, 61, 0.12);
+  background: var(--glass-surface);
+  border: var(--glass-outline);
   border-radius: 9999px;
   padding: 0.85rem 2rem;
   display: flex;
   align-items: center;
   gap: 1.25rem;
   flex-shrink: 0;
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 10px 26px rgba(40, 21, 36, 0.08);
 }
 
 .rating-large-score {
@@ -1349,13 +1444,16 @@ h1, h2, h3, h4, .font-display {
 }
 
 .testimonial-card {
-  background: #f8f1f3;
+  background: var(--glass-surface);
   border-radius: 22px;
   padding: 2rem 1.65rem;
   display: flex;
   flex-direction: column;
   position: relative;
-  border: 1px solid rgba(73, 35, 61, 0.06);
+  border: var(--glass-outline);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 12px 30px rgba(40, 21, 36, 0.09);
 }
 
 .testimonial-quote-icon {
@@ -1448,8 +1546,8 @@ h1, h2, h3, h4, .font-display {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(73, 35, 61, 0.9);
-  border: 1px solid var(--color-accent-gold);
+  background: rgba(53, 26, 46, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.52);
   border-radius: 9999px;
   padding: 0.5rem 1.25rem;
   color: var(--text-white);
@@ -1458,7 +1556,9 @@ h1, h2, h3, h4, .font-display {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: var(--glass-highlight), 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .map-pin-badge i {
@@ -1494,6 +1594,9 @@ h1, h2, h3, h4, .font-display {
   color: var(--text-white);
   font-family: var(--font-display);
   font-size: 1rem;
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 8px 22px rgba(0, 0, 0, 0.12);
   transition: all var(--transition-fast);
 }
 
@@ -1526,6 +1629,9 @@ h1, h2, h3, h4, .font-display {
   justify-content: space-between;
   gap: 1.5rem;
   margin-bottom: 3.5rem;
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 12px 30px rgba(0, 0, 0, 0.14);
 }
 
 .office-name {
@@ -1546,12 +1652,13 @@ h1, h2, h3, h4, .font-display {
 
 /* Lead Generation Form Capsule */
 .lead-form-capsule {
-  background: rgba(40, 21, 36, 0.85);
-  border: 1.5px solid rgba(207, 118, 146, 0.5);
+  background: rgba(40, 21, 36, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 28px;
   padding: 2.75rem 3rem;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
 }
 
 .lead-form-grid {
@@ -1599,13 +1706,15 @@ h1, h2, h3, h4, .font-display {
   padding: 0.85rem 1.15rem;
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.84);
   color: #49233d;
   font-family: var(--font-body);
   font-size: 0.95rem;
   font-weight: 500;
   outline: none;
   transition: all var(--transition-fast);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .form-control:focus {
@@ -1668,11 +1777,13 @@ h1, h2, h3, h4, .font-display {
 }
 
 .diary-card {
-  background: #ffffff;
+  background: var(--glass-surface);
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(73, 35, 61, 0.08);
-  box-shadow: var(--shadow-sm);
+  border: var(--glass-outline);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
   display: flex;
   flex-direction: column;
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
@@ -1680,7 +1791,7 @@ h1, h2, h3, h4, .font-display {
 
 .diary-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--glass-highlight), 0 20px 42px rgba(40, 21, 36, 0.18);
 }
 
 .diary-img-wrapper {
@@ -1705,14 +1816,16 @@ h1, h2, h3, h4, .font-display {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(12px) saturate(145%);
+  backdrop-filter: blur(12px) saturate(145%);
   color: #49233d;
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.3rem 0.75rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: var(--glass-outline);
+  box-shadow: var(--glass-highlight), 0 6px 18px rgba(40, 21, 36, 0.12);
 }
 
 .diary-body {
@@ -1744,15 +1857,17 @@ h1, h2, h3, h4, .font-display {
 
 /* Pre-footer Call to Action Capsule Banner */
 .prefooter-cta-banner {
-  background: var(--color-navbar-gradient);
+  background: linear-gradient(110deg, rgba(229, 43, 69, 0.78), rgba(81, 75, 155, 0.76));
   border-radius: 9999px;
   padding: 1.65rem 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  box-shadow: 0 16px 40px rgba(73, 35, 61, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), 0 16px 40px rgba(73, 35, 61, 0.2);
 }
 
 .prefooter-title {
@@ -1808,6 +1923,9 @@ h1, h2, h3, h4, .font-display {
   height: 36px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1960,13 +2078,16 @@ h1, h2, h3, h4, .font-display {
 }
 
 .modal-dialog {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.72);
   border-radius: 24px;
   max-width: 500px;
   width: 100%;
   padding: 2.25rem 2rem;
   position: relative;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
   transform: scale(0.92);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -2035,7 +2156,10 @@ h1, h2, h3, h4, .font-display {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f8f1f3;
+  background: rgba(255, 255, 255, 0.66);
+  border: var(--glass-outline);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
   padding: 0.85rem 1.25rem;
   border-radius: 12px;
   margin-bottom: 1.25rem;
@@ -2060,7 +2184,7 @@ h1, h2, h3, h4, .font-display {
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%) translateY(100px);
-  background: #49233d;
+  background: rgba(53, 26, 46, 0.84);
   color: #ffffff;
   padding: 1rem 1.75rem;
   border-radius: 9999px;
@@ -2075,6 +2199,8 @@ h1, h2, h3, h4, .font-display {
   opacity: 0;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
 }
 
 .toast-notification.show {
@@ -2183,6 +2309,7 @@ h1, h2, h3, h4, .font-display {
     margin-top: 3rem;
   }
   .packages-section {
+    margin-top: 0;
     padding-top: 4.5rem;
   }
   .packages-grid, .diaries-grid {
