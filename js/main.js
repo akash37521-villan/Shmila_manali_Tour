@@ -113,7 +113,31 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ------------------------------------------------------------------------
-  // 4. ANIMATED NUMBER COUNTERS (STATS SECTION)
+  // 4. SCROLL REVEAL ANIMATIONS
+  // ------------------------------------------------------------------------
+  const revealTargets = document.querySelectorAll(
+    '.section-header, .feature-item, .story-feature-card, .stat-card, .destination-card, .departure-card, .testimonial-card, .diary-card, .prefooter-cta-banner, .site-footer .footer-col'
+  );
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if ('IntersectionObserver' in window && !prefersReducedMotion) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' });
+
+    revealTargets.forEach(element => {
+      element.classList.add('reveal-on-scroll');
+      revealObserver.observe(element);
+    });
+  }
+
+  // ------------------------------------------------------------------------
+  // 5. ANIMATED NUMBER COUNTERS (STATS SECTION)
   // ------------------------------------------------------------------------
   const statNumbers = document.querySelectorAll('.stat-number');
   let animated = false;
@@ -153,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------------
-  // 5. INTERACTIVE BOOKING MODAL
+  // 6. INTERACTIVE BOOKING MODAL
   // ------------------------------------------------------------------------
   const bookingModal = document.getElementById('bookingModal');
   const modalCloseBtn = document.getElementById('modalCloseBtn');
@@ -205,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------------
-  // 6. LEAD GENERATION FORM VALIDATION & SUBMISSION
+  // 7. LEAD GENERATION FORM VALIDATION & SUBMISSION
   // ------------------------------------------------------------------------
   const tripLeadForm = document.getElementById('tripLeadForm');
   const nameError = document.getElementById('nameError');
@@ -274,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------------
-  // 7. TOAST NOTIFICATION HELPER
+  // 8. TOAST NOTIFICATION HELPER
   // ------------------------------------------------------------------------
   const toast = document.getElementById('toastNotification');
   const toastMsg = document.getElementById('toastMessage');
@@ -292,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------------
-  // 8. EXPLORE SHIMLA / MANALI DESTINATION QUICK-ACTION
+  // 9. EXPLORE SHIMLA / MANALI DESTINATION QUICK-ACTION
   // ------------------------------------------------------------------------
   window.filterByDestination = function(dest) {
     const packagesSection = document.getElementById('packages');
