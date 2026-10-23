@@ -118,6 +118,7 @@ The layout is designed and checked for these screen widths:
 
 - Masked hero headline and subtle Himalayan image drift.
 - Staggered fade-and-rise reveals and a scroll progress bar.
+- Floating, dimensional glass bubbles around the featured Himachal photo.
 - Animated statistics and image hover effects.
 - Honors the visitor's reduced-motion accessibility preference.
 - Playfair Display headings paired with DM Sans body text.
