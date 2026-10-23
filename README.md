@@ -122,8 +122,6 @@ A few items on the live site still look like placeholders:
 ## 📞 Contact
 
 **Shimla Manali Tourism**
-
-- 📍 Bhardwaj Niwas, Kotlanala, Rajgarh Rd, near PG College, Solan, Himachal Pradesh 173212
 - 📱 +91 98162-67388
 - ✉️ shimlamanalitourismhtt@gmail.com
 - 💬 [Chat on WhatsApp](https://wa.me/919816267388?text=Hello%20Shimla%20Manali%20Tourism%2C%20I%20am%20interested%20in%20planning%20a%20trip%21)
@@ -131,9 +129,5 @@ A few items on the live site still look like placeholders:
 ## 📄 License
 
 © Shimla Manali Tourism. All rights reserved.
-
-Add a license here (for example MIT) if you plan to open-source the code.
-
----
 
 Designed with 💛 in the Himalayas
