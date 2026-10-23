@@ -1,0 +1,58 @@
+SHIMLA MANALI TOURISM - HOME PAGE DELIVERABLES
+
+1. COMPLETE HOME PAGE SOURCE
+
+The complete source is in the project folder:
+- index.html - Home page markup and content
+- css\style.css - Page styling and responsive layouts
+- js\main.js - Page interactions and animations
+- assets\ - Images, icons, and other static assets
+- server.js - Local development server
+- package.json - Project run scripts
+
+2. LOCAL SETUP
+
+Requirements:
+- Install Node.js (LTS recommended).
+- Git is needed only if cloning the repository.
+
+Get the source:
+  git clone https://github.com/akash37521-villan/Shmila_manali_Tour.git
+  cd Shmila_manali_Tour
+
+Run the website:
+  npm start
+
+Open this address in a browser:
+  http://localhost:3000
+
+The project has no third-party npm dependencies, so npm install is not
+required. Stop the local server with Ctrl+C.
+
+3. RESPONSIVE SCREENSHOTS
+
+Desktop:
+- screenshots\1920px_large_desktop.png
+- screenshots\1440px_desktop.png
+- screenshots\1366px_laptop.png
+- screenshots\1200px_small_desktop.png
+
+Tablet:
+- screenshots\1024px_tablet_landscape.png
+- screenshots\992px_tablet.png
+- screenshots\768px_tablet_portrait.png
+
+Mobile:
+- screenshots\576px_large_mobile.png
+- screenshots\390px_standard_mobile.png
+- screenshots\350px_small_mobile.png
+
+Additional scrolled page screenshots:
+- screenshots\1440px_scrolled_discover.png
+- screenshots\1440px_scrolled_packages.png
+- screenshots\1440px_scrolled_gateway.png
+- screenshots\1440px_scrolled_footer.png
+
+4. DEPLOYED PREVIEW
+
+https://shimlamanalitour.vercel.app/
