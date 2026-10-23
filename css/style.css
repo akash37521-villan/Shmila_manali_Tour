@@ -949,7 +949,7 @@ h1, h2, h3, h4, .font-display {
   z-index: 3;
   pointer-events: none;
   transform-style: preserve-3d;
-  animation: orb-float 6s ease-in-out infinite;
+  animation: orb-float 7s ease-in-out infinite;
   will-change: transform;
 }
 
@@ -963,15 +963,15 @@ h1, h2, h3, h4, .font-display {
 
 .glass-orb::before {
   inset: 0;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.78);
   background:
-    radial-gradient(ellipse at 28% 22%, rgba(255, 255, 255, 0.96) 0 7%, rgba(255, 255, 255, 0.58) 15%, transparent 38%),
-    radial-gradient(ellipse at 72% 82%, rgba(12, 46, 39, 0.34), transparent 54%),
+    radial-gradient(ellipse at 28% 22%, rgba(255, 255, 255, 0.92) 0 7%, rgba(255, 255, 255, 0.34) 15%, transparent 38%),
+    radial-gradient(ellipse at 72% 82%, var(--orb-shade), transparent 54%),
     radial-gradient(circle at 36% 30%, var(--orb-highlight), var(--orb-mid) 43%, var(--orb-edge) 100%);
   box-shadow:
-    inset -7px -9px 15px rgba(11, 39, 34, 0.32),
-    inset 5px 6px 12px rgba(255, 255, 255, 0.72),
-    0 16px 26px rgba(27, 49, 43, 0.22);
+    inset -7px -9px 15px var(--orb-inset-shadow),
+    inset 5px 6px 12px rgba(255, 255, 255, 0.58),
+    0 16px 26px rgba(27, 49, 43, 0.16);
 }
 
 .glass-orb::after {
@@ -979,7 +979,7 @@ h1, h2, h3, h4, .font-display {
   height: 10%;
   top: 17%;
   left: 22%;
-  background: rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.55);
   filter: blur(3px);
   transform: rotate(-36deg);
   opacity: 0.85;
@@ -988,27 +988,31 @@ h1, h2, h3, h4, .font-display {
 .orb-top-right {
   top: 15px;
   right: 2%;
-  --orb-highlight: #e4f5ed;
-  --orb-mid: #8dbeb0;
-  --orb-edge: #28695a;
+  --orb-highlight: rgba(228, 245, 237, 0.46);
+  --orb-mid: rgba(141, 190, 176, 0.2);
+  --orb-edge: rgba(40, 105, 90, 0.12);
+  --orb-shade: rgba(12, 46, 39, 0.2);
+  --orb-inset-shadow: rgba(11, 39, 34, 0.2);
   animation-delay: -1.5s;
 }
 
 .orb-bottom-left {
   bottom: 25px;
   left: 2%;
-  --orb-highlight: #fff6d6;
-  --orb-mid: #e6ce80;
-  --orb-edge: #947335;
+  --orb-highlight: rgba(255, 246, 214, 0.5);
+  --orb-mid: rgba(230, 206, 128, 0.22);
+  --orb-edge: rgba(148, 115, 53, 0.14);
+  --orb-shade: rgba(92, 70, 28, 0.18);
+  --orb-inset-shadow: rgba(92, 70, 28, 0.18);
   animation-delay: -4s;
 }
 
 @keyframes orb-float {
   0%, 100% {
-    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+    transform: translate3d(-4px, 0, 0) rotateX(0deg) rotateY(0deg);
   }
   50% {
-    transform: translate3d(0, -12px, 8px) rotateX(8deg) rotateY(-8deg);
+    transform: translate3d(5px, -16px, 8px) rotateX(9deg) rotateY(-10deg);
   }
 }
 
@@ -1461,22 +1465,11 @@ h1, h2, h3, h4, .font-display {
   color: #ed1c24;
 }
 
-.glass-bubble {
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(207, 118, 146, 0.3) 100%);
-  border: 2px solid rgba(245, 184, 0, 0.7);
-  backdrop-filter: blur(8px);
-}
-
-.bubble-top-right {
-  top: 15px;
+.map-inner-wrapper .orb-top-right {
   right: 20px;
 }
 
-.bubble-bottom-left {
+.map-inner-wrapper .orb-bottom-left {
   bottom: 20px;
   left: 20px;
 }
