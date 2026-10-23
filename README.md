@@ -32,7 +32,8 @@ The layout is designed and checked for these screen widths:
 ## Interface highlights
 
 - Responsive navigation, package cards, destinations, forms, and footer.
-- Animated Himalayan hero image, entrance transitions, and scroll reveals.
+- Masked hero headline, subtle Himalayan image drift, staggered scroll reveals, and a reading-progress bar.
+- Animated statistics and image hover effects, with reduced-motion accessibility support.
 - Honors the visitor's reduced-motion accessibility preference.
 - Playfair Display headings paired with DM Sans body text.
 

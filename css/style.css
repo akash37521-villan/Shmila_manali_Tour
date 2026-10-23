@@ -127,6 +127,24 @@ ul, ol {
   text-align: center;
 }
 
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  z-index: 3000;
+  pointer-events: none;
+}
+
+.scroll-progress-bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #ed1c24 0%, #e34470 52%, #514b9b 100%);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
 .w-100 {
   width: 100%;
 }
@@ -470,6 +488,7 @@ h1, h2, h3, h4, .font-display {
   color: var(--text-white);
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   margin-bottom: 1.25rem;
+  animation: hero-title-reveal 0.9s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .hero-subtitle {
@@ -552,12 +571,10 @@ h1, h2, h3, h4, .font-display {
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .reveal-on-scroll.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+  animation: fade-rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms) both;
 }
 
 .package-card.reveal-on-scroll,
@@ -566,15 +583,43 @@ h1, h2, h3, h4, .font-display {
   transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow var(--transition-normal);
 }
 
+.package-card.reveal-on-scroll:not(.is-visible),
+.diary-card.reveal-on-scroll:not(.is-visible),
+.destination-card.reveal-on-scroll:not(.is-visible) {
+  transition: box-shadow var(--transition-normal);
+}
+
 @keyframes hero-image-drift {
   from { transform: scale(1); }
-  to { transform: scale(1.08); }
+  to { transform: scale(1.045); }
 }
 
 @keyframes hero-content-enter {
   from {
     opacity: 0;
     transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-title-reveal {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(18px);
+  }
+  to {
+    clip-path: inset(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -2338,12 +2383,18 @@ h1, h2, h3, h4, .font-display {
   *::after {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 
   .reveal-on-scroll {
     opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+
+  .hero-section::before {
     transform: none;
   }
 }

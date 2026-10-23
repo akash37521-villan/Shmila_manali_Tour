@@ -59,8 +59,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // ------------------------------------------------------------------------
   const navLinks = document.querySelectorAll('.nav-menu .nav-link');
   const sections = document.querySelectorAll('section[id]');
+  const scrollProgressBar = document.getElementById('scrollProgressBar');
 
-  window.addEventListener('scroll', () => {
+  function updateScrollEffects() {
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollProgress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
+
+    if (scrollProgressBar) {
+      scrollProgressBar.style.transform = `scaleX(${Math.min(1, Math.max(0, scrollProgress))})`;
+    }
+
     let currentSectionId = '';
     const scrollPos = window.scrollY + 200;
 
@@ -78,7 +86,20 @@ document.addEventListener('DOMContentLoaded', () => {
         link.classList.add('active');
       }
     });
-  });
+  }
+
+  let scrollEffectsScheduled = false;
+  window.addEventListener('scroll', () => {
+    if (!scrollEffectsScheduled) {
+      scrollEffectsScheduled = true;
+      window.requestAnimationFrame(() => {
+        updateScrollEffects();
+        scrollEffectsScheduled = false;
+      });
+    }
+  }, { passive: true });
+  window.addEventListener('resize', updateScrollEffects, { passive: true });
+  updateScrollEffects();
 
   // ------------------------------------------------------------------------
   // 3. PACKAGE CATEGORY FILTERING
@@ -115,9 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ------------------------------------------------------------------------
   // 4. SCROLL REVEAL ANIMATIONS
   // ------------------------------------------------------------------------
-  const revealTargets = document.querySelectorAll(
-    '.section-header, .feature-item, .story-feature-card, .stat-card, .destination-card, .departure-card, .testimonial-card, .diary-card, .prefooter-cta-banner, .site-footer .footer-col'
-  );
+  const revealSelector = '.section-header, .feature-item, .story-feature-card, .stat-card, .destination-card, .package-card, .departure-card, .testimonial-card, .diary-card, .prefooter-cta-banner, .site-footer .footer-col';
+  const revealTargets = document.querySelectorAll(revealSelector);
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if ('IntersectionObserver' in window && !prefersReducedMotion) {
@@ -129,6 +149,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' });
+
+    const staggerContainers = document.querySelectorAll(
+      '.floating-glass-bar, .discover-col, .stats-grid, .explore-grid, .packages-grid, .departures-grid, .testimonials-grid, .diaries-grid, .site-footer .footer-grid'
+    );
+
+    staggerContainers.forEach(container => {
+      Array.from(container.children)
+        .filter(element => element.matches(revealSelector))
+        .forEach((element, index) => {
+          element.style.setProperty('--reveal-delay', `${Math.min(index * 70, 350)}ms`);
+        });
+    });
 
     revealTargets.forEach(element => {
       element.classList.add('reveal-on-scroll');
@@ -147,6 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const target = parseInt(stat.getAttribute('data-target'), 10);
       const isPercent = stat.innerText.includes('%');
       const hasPlus = stat.innerText.includes('+');
+
+      if (prefersReducedMotion) {
+        stat.innerText = target + (isPercent ? '%' : (hasPlus ? '+' : ''));
+        return;
+      }
+
       let count = 0;
       const duration = 1800;
       const increment = Math.ceil(target / (duration / 30));
