@@ -87,22 +87,6 @@ The site is a single-page, mobile-responsive experience with a lead capture form
 - [Git](https://git-scm.com/)
 - Optional: [Node.js](https://nodejs.org/) if you use a local dev server or build tooling
 
-### Run Locally
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/<your-username>/<your-repo-name>.git
-
-# 2. Move into the project folder
-cd <your-repo-name>
-
-# 3. Start a simple local server (pick one)
-npx serve .
-# or
-python -m http.server 8000
-```
-
-Then open `http://localhost:3000` (or `http://localhost:8000`) in your browser.
 
 ### Deploy to Vercel
 
